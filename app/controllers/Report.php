@@ -1,6 +1,6 @@
 <?php
 
-class Users extends Controller
+class Report extends Controller
 {
     public function index()
     {
@@ -10,7 +10,7 @@ class Users extends Controller
         $data['Status_Code'] = "200";
         $data['Message'] = "Berhasil";
 
-        $data['users'] = $this->model('UsersModel')->index();
+        $data['role'] = $this->model('RolesModel')->index();
         echo json_encode($data);
     }
 
@@ -22,14 +22,14 @@ class Users extends Controller
         $data['Status_Code'] = "200";
         $data['Message'] = "Berhasil";
 
-        $data['users'] = $this->model('UsersModel')->show();
+        $data['role'] = $this->model('RolesModel')->show();
         echo json_encode($data);
     }
 
     public function insert()
     {
         $data = [];
-        if ($this->model('UsersModel')->insert($_POST) >= 0) {
+        if ($this->model('RolesModel')->insert($_POST) >= 0) {
             $data['Status'] = "OK";
             $data['Status_Code'] = "200";
             $data['Message'] = "Insert Data Berhasil";
@@ -38,30 +38,28 @@ class Users extends Controller
             $data['Status_Code'] = "400";
             $data['Message'] = "Insert Data Gagal";
         }
-        // $data['insert'] = $this->model('UsersModel')->insert($_POST);
+        // $data['insert'] = $this->model('RolesModel')->insert($_POST);
         echo json_encode($data);
     }
 
     public function getDataById()
     {
-        $data = [];
-        $data['User'] = $this->model('UsersModel')->getDataById($_POST['User_Id']);
-        if ($data['User'] >= 0) {
-            $data['Status'] = "HTTP OK";
-            $data['Status_Code'] = "200";
-            $data['Message'] = "Data ditemukan";
+        if ($this->model('RolesModel')->getDataById($_POST['Roles_Id']) >= 0) {
+            echo json_encode($this->model('RolesModel')->getDataById($_POST['Roles_Id']));
         } else {
+            $data = [];
             $data['Status'] = "NULL";
             $data['Status_Code'] = "400";
             $data['Message'] = "Data tidak ditemukan";
+
+            echo json_encode($data);
         }
-        echo json_encode($data);
     }
 
     public function update()
     {
         $data = [];
-        if ($this->model('UsersModel')->update($_POST) >= 0) {
+        if ($this->model('RolesModel')->update($_POST) >= 0) {
             $data['Status'] = "OK";
             $data['Status_Code'] = "200";
             $data['Message'] = "Update Data Berhasil";
@@ -73,25 +71,10 @@ class Users extends Controller
         echo json_encode($data);
     }
 
-    public function ubahPassword()
-    {
-        $data = [];
-        if ($this->model('UsersModel')->ubahPassword($_POST) >= 0) {
-            $data['Status'] = "OK";
-            $data['Status_Code'] = "200";
-            $data['Message'] = "Password berhasil diubah!";
-        } else {
-            $data['Status'] = "BAD REQUEST";
-            $data['Status_Code'] = "400";
-            $data['Message'] = "Ubah password Data Gagal";
-        }
-        echo json_encode($data);
-    }
-
     public function delete()
     {
         $data = [];
-        if ($this->model('UsersModel')->delete($_POST) >= 0) {
+        if ($this->model('RolesModel')->delete($_POST) >= 0) {
             $data['Status'] = "OK";
             $data['Status_Code'] = "200";
             $data['Message'] = "Delete Data Berhasil";
@@ -106,7 +89,7 @@ class Users extends Controller
     public function recover()
     {
         $data = [];
-        if ($this->model('UsersModel')->recover($_POST) >= 0) {
+        if ($this->model('RolesModel')->recover($_POST) >= 0) {
             $data['Status'] = "OK";
             $data['Status_Code'] = "200";
             $data['Message'] = "Your file has been recovered.";
@@ -114,21 +97,6 @@ class Users extends Controller
             $data['Status'] = "BAD REQUEST";
             $data['Status_Code'] = "400";
             $data['Message'] = "Recover Data Gagal";
-        }
-        echo json_encode($data);
-    }
-
-    public function ubahStatusAktif()
-    {
-        $data = [];
-        if ($this->model('UsersModel')->ubahStatusAktif($_POST) >= 0) {
-            $data['Status'] = "OK";
-            $data['Status_Code'] = "200";
-            $data['Message'] = "User has been changed.";
-        } else {
-            $data['Status'] = "BAD REQUEST";
-            $data['Status_Code'] = "400";
-            $data['Message'] = "Ubah status user gagal";
         }
         echo json_encode($data);
     }

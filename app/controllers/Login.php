@@ -4,7 +4,7 @@ class Login extends Controller
 {
     public function index()
     {
-        session_start();
+        // session_start();
         $data = [];
         $login = $this->model('UsersModel')->login($_POST);
 

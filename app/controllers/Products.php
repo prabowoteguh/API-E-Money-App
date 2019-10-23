@@ -1,6 +1,6 @@
 <?php
 
-class Roles extends Controller
+class Products extends Controller
 {
     public function index()
     {
@@ -10,7 +10,7 @@ class Roles extends Controller
         $data['Status_Code'] = "200";
         $data['Message'] = "Berhasil";
 
-        $data['role'] = $this->model('RolesModel')->index();
+        $data['Products'] = $this->model('ProductsModel')->index();
         echo json_encode($data);
     }
 
@@ -22,14 +22,14 @@ class Roles extends Controller
         $data['Status_Code'] = "200";
         $data['Message'] = "Berhasil";
 
-        $data['role'] = $this->model('RolesModel')->show();
+        $data['Products'] = $this->model('ProductsModel')->show();
         echo json_encode($data);
     }
 
     public function insert()
     {
         $data = [];
-        if ($this->model('RolesModel')->insert($_POST) >= 0) {
+        if ($this->model('ProductsModel')->insert($_POST) >= 0) {
             $data['Status'] = "OK";
             $data['Status_Code'] = "200";
             $data['Message'] = "Insert Data Berhasil";
@@ -38,14 +38,14 @@ class Roles extends Controller
             $data['Status_Code'] = "400";
             $data['Message'] = "Insert Data Gagal";
         }
-        // $data['insert'] = $this->model('RolesModel')->insert($_POST);
+        // $data['insert'] = $this->model('ProductsModel')->insert($_POST);
         echo json_encode($data);
     }
 
     public function getDataById()
     {
-        if ($this->model('RolesModel')->getDataById($_POST['Roles_Id']) >= 0) {
-            echo json_encode($this->model('RolesModel')->getDataById($_POST['Roles_Id']));
+        if ($this->model('ProductsModel')->getDataById($_POST['Products_Id']) >= 0) {
+            echo json_encode($this->model('ProductsModel')->getDataById($_POST['Products_Id']));
         } else {
             $data = [];
             $data['Status'] = "NULL";
@@ -59,7 +59,7 @@ class Roles extends Controller
     public function update()
     {
         $data = [];
-        if ($this->model('RolesModel')->update($_POST) >= 0) {
+        if ($this->model('ProductsModel')->update($_POST) >= 0) {
             $data['Status'] = "OK";
             $data['Status_Code'] = "200";
             $data['Message'] = "Update Data Berhasil";
@@ -82,21 +82,6 @@ class Roles extends Controller
             $data['Status'] = "BAD REQUEST";
             $data['Status_Code'] = "400";
             $data['Message'] = "Delete Data Gagal";
-        }
-        echo json_encode($data);
-    }
-
-    public function recover()
-    {
-        $data = [];
-        if ($this->model('RolesModel')->recover($_POST) >= 0) {
-            $data['Status'] = "OK";
-            $data['Status_Code'] = "200";
-            $data['Message'] = "Your file has been recovered.";
-        } else {
-            $data['Status'] = "BAD REQUEST";
-            $data['Status_Code'] = "400";
-            $data['Message'] = "Recover Data Gagal";
         }
         echo json_encode($data);
     }

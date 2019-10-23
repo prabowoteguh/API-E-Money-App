@@ -11,9 +11,15 @@ class RolesModel
         $this->db = new Database;
     }
 
+    public function index()
+    {
+        $this->db->query("SELECT * FROM  $this->table WHERE Role_Deleted_Status = 0");
+        return $this->db->banyakData();
+    }
+
     public function show()
     {
-        $this->db->query('SELECT * FROM ' . $this->table);
+        $this->db->query("SELECT * FROM  $this->table");
         return $this->db->banyakData();
     }
 
@@ -64,9 +70,35 @@ class RolesModel
 
     public function delete($request)
     {
-        $query = "DELETE FROM roles WHERE Role_Id = :Role_Id";
+        $query = "UPDATE roles SET 
+        Role_Deleted_Status = :Role_Deleted_Status,
+        Role_Deleted_By = :Role_Deleted_By,
+        Role_Deleted_Date = :Role_Deleted_Date
+        WHERE Role_Id = :Role_Id";
 
         $this->db->query($query);
+        $this->db->bind('Role_Deleted_Status', 1);
+        $this->db->bind('Role_Deleted_By', $request['Role_Deleted_By']);
+        $this->db->bind('Role_Deleted_Date', date("Y-m-d H:i:s"));
+        $this->db->bind('Role_Id', (int) $request['Role_Id']);
+
+        $this->db->execute();
+
+        return $this->db->rowCount();
+    }
+
+    public function recover($request)
+    {
+        $query = "UPDATE roles SET 
+        Role_Deleted_Status = :Role_Deleted_Status,
+        Role_Deleted_By = :Role_Deleted_By,
+        Role_Deleted_Date = :Role_Deleted_Date
+        WHERE Role_Id = :Role_Id";
+
+        $this->db->query($query);
+        $this->db->bind('Role_Deleted_Status', 0);
+        $this->db->bind('Role_Deleted_By', '');
+        $this->db->bind('Role_Deleted_Date', "0000-00-00 00:00:00");
         $this->db->bind('Role_Id', (int) $request['Role_Id']);
 
         $this->db->execute();

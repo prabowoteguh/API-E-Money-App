@@ -8,9 +8,9 @@ class HomeController extends Controller
 
         $data['status'] = "OK";
         $data['status_code'] = "200";
-        $data['Message'] = "Berhasil";
+        $data['Message'] = "Welcome to my API";
 
-        $data['mahasiswa'] = $this->model('RolesModel')->show();
+        // $data['mahasiswa'] = $this->model('RolesModel')->show();
         echo json_encode($data);
     }
 }

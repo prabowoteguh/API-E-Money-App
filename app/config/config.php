@@ -1,7 +1,8 @@
 <?php
 
 /* ===== URI CONFIG ===== */
-define('BASE_URL', 'http://localhost:8080/API/');
+// define('BASE_URL', 'http://192.168.10.172:8080/API-E-Money-App/public/');
+define('BASE_URL', 'http://localhost:8080/API-E-Money-App/public/');
 
 /* ===== DATABASE CONFIG ===== */
 define('DB_HOST', 'localhost');
